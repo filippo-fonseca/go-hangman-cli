@@ -13,7 +13,7 @@ func main() {
 
 	word := string(babbler.Babble())
 
-	lives := 2 & len(word)
+	lives := 2 * len(word)
 
 	blanks := []string{}
 
