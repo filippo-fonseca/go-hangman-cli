@@ -10,10 +10,10 @@ import (
 func main() {
 	babbler := babble.NewBabbler()
 	babbler.Count = 1
-	
+
 	word := string(babbler.Babble())
 
-	lives := 5
+	lives := 2 & len(word)
 
 	blanks := []string{}
 
