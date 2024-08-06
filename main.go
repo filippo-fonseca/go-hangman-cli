@@ -2,13 +2,18 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"strings"
+
+	"github.com/tjarratt/babble"
 )
 
 func main() {
-	words := []string{"php", "ts", "golang"}
-	word := words[rand.Intn(len(words))]
+	babbler := babble.NewBabbler()
+	babbler.Count = 1
+	
+	word := string(babbler.Babble())
+
+	lives := 5
 
 	blanks := []string{}
 
@@ -16,20 +21,36 @@ func main() {
 		blanks = append(blanks, "_")
 	}
 
-	fmt.Printf("Word: %s Letter: ", strings.Join(blanks, " "))
+	for {
+		fmt.Printf("❤️ %d, Word: %s Letter: ", lives, strings.Join(blanks, " "))
 
 	var input string
 
 	fmt.Scanln(&input)
-	fmt.Println(input)
+	input = strings.ToLower(input)
 
 	for _, inputLetter := range input {
+		correctGuess := false
 		for i, wordLetter := range word {
 			if inputLetter == wordLetter {
 				blanks[i] = string(inputLetter)
+				correctGuess = true
 			}
+		}
+
+		if !correctGuess {
+			 lives--
 		}
 	}
 
-	fmt.Println(blanks)
+	if (lives <= 0) {
+		fmt.Printf("❤️ 0, Word: %s - sorry, you lost!\n", word)
+		break
+	}
+
+	if word == strings.Join(blanks, "") {
+		fmt.Printf("❤️ %d, Word: %s - you won! Congrats!\n", lives, word)
+		break
+	}
+	}
 }
